@@ -10,7 +10,12 @@ name: Build OpenWrt
 
 on: 
   repository_dispatch:
-
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: true
+        default: 'false'
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   PPPOE_USERNAME: ${{ secrets.PPPOE_USERNAME }}
@@ -146,8 +151,10 @@ jobs:
               
     - name: SSH connection to Actions
       uses: garypang13/debugger-action@master
-      if: contains(github.event.action, 'ssh')
-
+      if: always()
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     - name: Download package
       id: package
       run: |
