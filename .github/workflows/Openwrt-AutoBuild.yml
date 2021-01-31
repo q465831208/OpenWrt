@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: ["${{ github.event.client_payload.target }}"]
+        target: [redmi-ac2100]
         
     steps:
     - name: Checkout
